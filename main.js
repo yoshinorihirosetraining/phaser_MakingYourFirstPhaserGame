@@ -13,6 +13,7 @@ function preload() {
 var platform;
 var player;
 var cursors;
+var stars;
 
 function create() {
 
@@ -63,6 +64,22 @@ function create() {
 
     cursors = game.input.keyboard.createCursorKeys();
 
+    stars = game.add.group();
+
+    stars.enableBody = true;
+
+    // Here we'll create 12 of them evenly spaced apart
+    for (var i = 0; i < 12; i++) {
+        // Create a star inside of the 'stars' group
+        var star = stars.create(i * 70, 0, 'star');
+
+        // Let gravity do its thing
+        star.body.gravity.y = 6;
+
+        // This just gives each star a slightly random bounce value
+        star.body.bounce.y = 0.7 + Math.random() * 0.2;
+    }
+
 }
 
 function update() {
@@ -96,5 +113,16 @@ function update() {
         player.body.velocity.y = -350;
     }
 
+    game.physics.arcade.collide(stars, platforms);
+    game.physics.arcade.overlap(player, stars, collectStar, null, this);
+
 }
+
+function collectStar(player, star) {
+
+    // Removes the star from the screen
+    star.kill();
+
+}
+
 
