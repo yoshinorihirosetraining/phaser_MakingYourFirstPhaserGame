@@ -14,6 +14,8 @@ var platform;
 var player;
 var cursors;
 var stars;
+var score = 0;
+var scoreText;
 
 function create() {
 
@@ -80,6 +82,9 @@ function create() {
         star.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
 
+    scoreText = game.add.text(16, 16, 'score: 0',
+    { fontSize: '32px', fill: '#000' });
+
 }
 
 function update() {
@@ -119,10 +124,13 @@ function update() {
 }
 
 function collectStar(player, star) {
-
-    // Removes the star from the screen
+    
+    // Remove the star from the screen
     star.kill();
 
-}
+    // Add and update the score
+    score += 10;
+    scoreText.text = 'Score: ' + score;
 
+}
 
